@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "qingfeng-miniprogram",
   "private": true,
   "scripts": {
     "build": "turbo run build",
