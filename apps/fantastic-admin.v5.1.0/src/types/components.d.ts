@@ -40,7 +40,6 @@ declare module 'vue' {
     FaTabs: typeof import('./../ui/components/FaTabs/index.vue')['default']
     FaToast: typeof import('./../ui/components/FaToast/index.vue')['default']
     FaTooltip: typeof import('./../ui/components/FaTooltip/index.vue')['default']
-    FileUpload: typeof import('./../components/FileUpload/index.vue')['default']
     ImagePreview: typeof import('./../components/ImagePreview/index.vue')['default']
     ImagesUpload: typeof import('./../components/ImagesUpload/index.vue')['default']
     ImageUpload: typeof import('./../components/ImageUpload/index.vue')['default']

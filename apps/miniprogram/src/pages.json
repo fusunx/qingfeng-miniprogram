@@ -1,16 +1,85 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
+    },
+    {
+      "path": "pages/goodDetail/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
+    },
+    {
+      "path": "pages/category/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
+    },
+    {
+      "path": "pages/news/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
+    },
+    {
+      "path": "pages/communityExperienceCenter/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
+    },
+    {
+      "path": "pages/richText/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "钦丰康养生活馆",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#5e5959",
+    "selectedColor": "#e3d90b",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "fontSize": "16px",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/imgs/home.png",
+        "selectedIconPath": "static/imgs/home_active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "iconPath": "static/imgs/category.png",
+        "selectedIconPath": "static/imgs/category_active.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/communityExperienceCenter/index",
+        "iconPath": "static/imgs/person.png",
+        "selectedIconPath": "static/imgs/person_active.png",
+        "text": "社区体验馆"
+      },
+      {
+        "pagePath": "pages/news/index",
+        "iconPath": "static/imgs/news.png",
+        "selectedIconPath": "static/imgs/news_active.png",
+        "text": "资讯"
+      }
+    ]
+  }
 }

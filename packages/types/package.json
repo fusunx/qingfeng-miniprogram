@@ -1,0 +1,23 @@
+{
+  "name": "@qinfeng/types",
+  "version": "1.0.1",
+  "description": "types",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --emitDeclarationOnly"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
