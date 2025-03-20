@@ -28,4 +28,8 @@ interface ImportMetaEnv {
    * 是否开启开发者工具
    */
   readonly VITE_OPEN_DEVTOOLS: boolean
+  /**
+   * 禁用mock
+   */
+  readonly VITE_BUILD_MOCK: boolean
 }

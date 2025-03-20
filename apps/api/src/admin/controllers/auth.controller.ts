@@ -10,21 +10,19 @@ import {
 import { Public } from "src/shared/decorators/public.decorator";
 import { LocalAuthGuard } from "src/shared/guards/auth-guard.guard";
 import { AuthService } from "src/shared/services/auth.service";
-import { UtilityService } from "src/shared/services/utility.service";
 import { BasicResult } from "src/shared/vo/basic-result.vo";
 
 @Controller("")
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly utilityService: UtilityService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post("/login")
   @HttpCode(200)
   async login(@Request() req) {
+    console.log("========");
+
     const result = await this.authService.createTokens(req.user);
     return BasicResult.success("登录成功", result);
   }

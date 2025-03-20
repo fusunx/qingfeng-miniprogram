@@ -21,14 +21,20 @@ export default defineConfig(({ mode, command }) => {
   return {
     // 开发服务器选项 https://cn.vitejs.dev/config/server-options
     server: {
-      open: true,
-      host: true,
-      port: 9000,
       proxy: {
-        "/proxy": {
-          target: env.VITE_APP_API_BASEURL,
-          changeOrigin: command === "serve" && env.VITE_OPEN_PROXY === "true",
-          rewrite: (path) => path.replace(/\/proxy/, ""),
+        "/api": {
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+          // mock代理目标地址
+          target: "http://localhost:4000/api",
+          ws: true,
+        },
+        "/uploads": {
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/uploads/, ""),
+          // mock代理目标地址
+          target: "http://localhost:4000/uploads",
+          ws: true,
         },
       },
     },

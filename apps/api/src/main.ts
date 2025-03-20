@@ -5,6 +5,12 @@ import { ValidationPipe } from "@nestjs/common";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // 添加全局中间件
+  app.use((req, res, next) => {
+    console.log(`Request received: ${req.method} ${req.url}`);
+    next();
+  });
+
   // 配置class-validate
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,6 +22,8 @@ async function bootstrap() {
   // 设置全局路由前缀
   app.setGlobalPrefix("api");
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 4000);
+
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
