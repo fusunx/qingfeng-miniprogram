@@ -20,7 +20,7 @@ async function bootstrap() {
   );
 
   // 设置全局路由前缀
-  app.setGlobalPrefix("api");
+  // app.setGlobalPrefix("api");
 
   await app.listen(process.env.PORT ?? 4000);
 

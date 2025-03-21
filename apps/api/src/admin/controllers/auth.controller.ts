@@ -21,8 +21,6 @@ export class AuthController {
   @Post("/login")
   @HttpCode(200)
   async login(@Request() req) {
-    console.log("========");
-
     const result = await this.authService.createTokens(req.user);
     return BasicResult.success("登录成功", result);
   }

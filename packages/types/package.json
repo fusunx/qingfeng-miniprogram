@@ -5,17 +5,17 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "import": "./src/index.ts",
+      "require": "./dist/index.js"
     },
     "./*": {
-      "types": "./src/*.ts",
-      "default": "./src/*.ts"
+      "import": "./src/*.ts",
+      "require": "./src/*.js"
     }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --emitDeclarationOnly"
+    "build": "tsc --build"
   },
   "keywords": [],
   "author": "",

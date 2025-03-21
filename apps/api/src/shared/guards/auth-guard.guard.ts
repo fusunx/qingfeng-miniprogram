@@ -1,15 +1,19 @@
-import { ExecutionContext, Injectable } from "@nestjs/common";
+import { ExecutionContext, Injectable, Logger } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { AuthGuard } from "@nestjs/passport";
 import { Observable } from "rxjs";
 import { IS_PUBLIC_KEY } from "../decorators/public.decorator";
 
 @Injectable()
-export class LocalAuthGuard extends AuthGuard("local") {}
+export class LocalAuthGuard extends AuthGuard("local") {
+  private readonly logger = new Logger(LocalAuthGuard.name);
 
-// 验证 c 端用户
-@Injectable()
-export class CLocalAuthGuard extends AuthGuard("clocal") {}
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    return super.canActivate(context);
+  }
+}
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {

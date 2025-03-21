@@ -53,6 +53,8 @@ const onSubmit = form.handleSubmit((values) => {
       } else {
         localStorage.removeItem("login_account");
       }
+      console.log("登录成功");
+
       emits("onLogin", values.account);
     })
     .finally(() => {

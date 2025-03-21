@@ -10,6 +10,7 @@ import { CommonModule } from "./common/common.module";
     SharedModule,
     AdminModule,
     ApiModule,
+    CommonModule,
     RouterModule.register([
       {
         path: "api/admin", // 设置统一前缀 `/api`

@@ -2,6 +2,15 @@ import { Global, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ConfigurationService } from "./services/configuration.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { UserService } from "./services/user.service";
+import { UtilityService } from "./services/utility.service";
+import { AuthService } from "./services/auth.service";
+import { User } from "./entities/user.entity";
+import { JwtModule } from "@nestjs/jwt";
+import { APP_GUARD } from "@nestjs/core";
+import { JwtAuthGuard } from "./guards/auth-guard.guard";
+import { PassportModule } from "@nestjs/passport";
+import { AuthLocalStrategy } from "./strategies/auth-local.strategy";
 
 @Global()
 @Module({
@@ -28,9 +37,32 @@ import { TypeOrmModule } from "@nestjs/typeorm";
         };
       },
     }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([User]),
+    PassportModule,
+    JwtModule.register({
+      global: true,
+      signOptions: { expiresIn: "7d" },
+    }),
   ],
-  providers: [ConfigurationService],
-  exports: [ConfigurationService],
+  providers: [
+    AuthLocalStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    ConfigurationService,
+    UserService,
+    UtilityService,
+    AuthService,
+    User,
+  ],
+  exports: [
+    AuthLocalStrategy,
+    ConfigurationService,
+    UserService,
+    UtilityService,
+    AuthService,
+    User,
+  ],
 })
 export class SharedModule {}

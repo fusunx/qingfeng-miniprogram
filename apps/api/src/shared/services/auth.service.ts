@@ -24,7 +24,6 @@ export class AuthService {
     userService: UserService,
   ): Promise<any> {
     const user = await userService.findOne({ where: { username } });
-
     if (user) {
       if (await this.utilityService.comparePassword(pass, user.password)) {
         delete user.password;
