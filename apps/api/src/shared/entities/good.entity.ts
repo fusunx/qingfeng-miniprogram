@@ -35,10 +35,10 @@ export class Good extends BasicEntity {
   })
   price: number;
 
-  @ManyToOne(() => Category, (category) => category.products, {
+  @ManyToOne(() => Category, (category) => category.goods, {
     cascade: true,
   })
   @JoinTable()
   @IsNotEmpty()
-  category: Category[];
+  category: Category;
 }

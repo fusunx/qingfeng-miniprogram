@@ -181,6 +181,7 @@ const getGoodInfo = async (id: number) => {
   const { data: res } = await getGoodDetailApi(id);
   if (res) {
     form.value = res;
+    detailTable.value = res.detailTable ? res.detailTable : [];
   }
 };
 
@@ -189,7 +190,10 @@ const handleClose = () => {
 };
 
 const handleConfirm = async () => {
-  const swiperImgs = fileList.value.map((item) => item.url!);
+  const swiperImgs = fileList.value.map(
+    (item) => (item?.response as any)?.data?.url,
+  );
+  console.log(swiperImgs, fileList.value);
   const reqData = {
     ...form.value,
     swiperImgs: swiperImgs,

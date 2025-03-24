@@ -70,6 +70,11 @@ export interface IGoodDetail extends ICreateGood {
   updatedAt: string;
 }
 
+/** 获取商品列表数据 */
+export interface IGoodFilterData extends ICommonFilterPage {
+  categoryId?: number;
+}
+
 /** 创建文章数据 */
 export interface ICreateArticle {
   name: string;

@@ -1,4 +1,4 @@
-import { Transform } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 /** 创建分类dto */
@@ -23,9 +23,11 @@ export class UpdateCategoryDto extends CreateCategoryDto {
 
 /** 获取列表通用dto */
 export class GetListCommonDto {
+  @Type(() => Number)
   @Transform(({ value }) => Number(value)) // 类型转换
   @IsNumber()
   page: number;
+  @Type(() => Number)
   @Transform(({ value }) => Number(value)) // 类型转换
   @IsNumber()
   pageSize: number;

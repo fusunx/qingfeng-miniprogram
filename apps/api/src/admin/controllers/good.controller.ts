@@ -28,7 +28,11 @@ export class GoodController {
   @Get("/:id")
   async getGoodById(@Param("id", ParseIntPipe) id: number) {
     const result = await this.goodService.getGoodDetail(id);
-    return BasicResult.success("获取成功", result);
+
+    return BasicResult.success("获取成功", {
+      ...result,
+      category: result.category.id,
+    });
   }
 
   @Post("create")

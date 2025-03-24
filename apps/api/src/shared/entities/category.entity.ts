@@ -9,5 +9,5 @@ export class Category extends BasicEntity {
   img: string;
 
   @OneToMany(() => Good, (good) => good.category)
-  products: Good[];
+  goods: Good[];
 }

@@ -1,5 +1,5 @@
 import { GoodService } from "src/shared/services/good.service";
-import { Body, Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
 import { Public } from "src/shared/decorators/public.decorator";
 import { GetGoodListDto } from "src/shared/dtos/good";
 import { BasicResult } from "src/shared/vo/basic-result.vo";
@@ -10,7 +10,7 @@ export class GoodController {
 
   @Get("list")
   @Public()
-  async getGoodList(@Body() dto: GetGoodListDto) {
+  async getGoodList(@Query() dto: GetGoodListDto) {
     const result = await this.goodService.getGoodList(dto);
     return BasicResult.success("获取成功", result);
   }

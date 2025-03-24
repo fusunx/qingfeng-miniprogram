@@ -537,6 +537,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
+      luch-request:
+        specifier: ^3.1.1
+        version: 3.1.1
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -1521,6 +1524,9 @@ packages:
   '@ctrl/tinycolor@3.6.1':
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+
+  '@dcloudio/types@2.6.12':
+    resolution: {integrity: sha512-mrCMwcINy1IFjU9VUqLeWBkj404yWs5paLDttBcA+eqUjanuUQbBcTVPqlrGgkyzLXDcV2oDDZRSNxNpXi4kMQ==}
 
   '@dcloudio/types@3.4.14':
     resolution: {integrity: sha512-VolQeZfTh8pQFsr2IlfIVX93blfvGTuBoJuZUc7iWOqtHV8gDrq6fXLhzsVlgZyuhhRZLOxlo33rkEqnY+ucAw==}
@@ -7111,6 +7117,9 @@ packages:
     resolution: {integrity: sha512-Nv9KddBcQSlQopmBHXSsZVY5xsdlZkdH/Iey0BlcBYggMd4two7cZnKOK9vmy3nY0O5RGH99z1PCeTpPqszUYg==}
     engines: {bun: '>=1.0.0', deno: '>=1.30.0', node: '>=8.0.0'}
 
+  luch-request@3.1.1:
+    resolution: {integrity: sha512-p7+mlcEtgRcd0OfXC4XZbyiwSr1XgCeqNT7LlVUjnk7InYl/8d5Rk7BUqAYNA2WRafI1wRIUQWRWZRpeUwWR0w==}
+
   lucide-vue-next@0.477.0:
     resolution: {integrity: sha512-C7azIKO7aJKf5MD7OIzV7NRDtnjXH3KSXfyJgGqRIMemuMzW/9esuMxDXIXDhBZcJgRtXMUN0FcJwOJZQ8SywA==}
     peerDependencies:
@@ -11556,6 +11565,8 @@ snapshots:
       postcss: 8.5.3
 
   '@ctrl/tinycolor@3.6.1': {}
+
+  '@dcloudio/types@2.6.12': {}
 
   '@dcloudio/types@3.4.14': {}
 
@@ -18638,6 +18649,10 @@ snapshots:
   lru-cache@7.18.3: {}
 
   lru.min@1.1.2: {}
+
+  luch-request@3.1.1:
+    dependencies:
+      '@dcloudio/types': 2.6.12
 
   lucide-vue-next@0.477.0(vue@3.5.13(typescript@5.8.2)):
     dependencies:

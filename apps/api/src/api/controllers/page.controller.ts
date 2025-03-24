@@ -7,7 +7,7 @@ import { Public } from "src/shared/decorators/public.decorator";
 export class PageController {
   constructor(private readonly pageService: PageService) {}
 
-  @Get()
+  @Get("get")
   @Public()
   async getPageConfig() {
     const result = await this.pageService.getPageConfig();

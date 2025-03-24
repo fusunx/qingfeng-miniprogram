@@ -29,11 +29,14 @@ export class CreateGoodDto {
   detailTable: IGoodMapDataList;
   @IsNotEmpty()
   @IsNumber()
+  @Transform(({ value }) => Number(value))
   sales: number;
   @IsNotEmpty()
   @IsNumber()
+  @Transform(({ value }) => Number(value))
   price: number;
   @IsNotEmpty()
+  @Transform(({ value }) => Number(value))
   @IsNumber()
   category: number;
   @IsNotEmpty()

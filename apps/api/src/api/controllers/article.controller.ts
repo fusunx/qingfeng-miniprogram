@@ -1,5 +1,5 @@
 import { ArticleService } from "src/shared/services/article.service";
-import { Body, Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
 import { Public } from "src/shared/decorators/public.decorator";
 import { GetListCommonDto } from "src/shared/dtos/category.dto";
 import { BasicResult } from "src/shared/vo/basic-result.vo";
@@ -8,9 +8,9 @@ import { BasicResult } from "src/shared/vo/basic-result.vo";
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  @Get()
+  @Get("list")
   @Public()
-  async getArticleList(@Body() dto: GetListCommonDto) {
+  async getArticleList(@Query() dto: GetListCommonDto) {
     const result = await this.articleService.getArticleList(dto);
     return BasicResult.success("获取成功", result);
   }

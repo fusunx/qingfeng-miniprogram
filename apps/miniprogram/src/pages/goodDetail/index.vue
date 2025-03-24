@@ -1,23 +1,25 @@
 <template>
   <view class="page">
     <swiper v-if="goodData" class="swiper" circular :interval="2000" :duration="500">
-      <swiper-item v-for="(src, index) in goodData.swiperList" :key="index">
-        <video v-if="isMp4(src)" class="swiper-content" :src="src" controls></video>
-        <image v-else class="swiper-content" mode="aspectFit" :src="src"></image>
+      <swiper-item v-for="(src, index) in goodData.swiperImgs" :key="index">
+        <video v-if="isMp4(src)" class="swiper-content" :src="getStaticUrl(src)" controls></video>
+        <image v-else class="swiper-content" mode="aspectFit" :src="getStaticUrl(src)"></image>
       </swiper-item>
     </swiper>
 
     <!-- 商品信息 -->
     <view class="good-info">
-      <uni-card :is-shadow="true" is-full>
-        <view class="good-info-name ellipsis-2">
-          {{ goodData?.name }}
-        </view>
+      <uni-card :is-shadow="true" is-full class="w-full">
+        <view>
+          <view class="good-info-name ellipsis-2">
+            {{ goodData?.name }}
+          </view>
 
-        <view class="good-info-sale-container">
-          <view class="sales">销量：{{ goodData?.salesVolume }}</view>
-          <view class="price-container">
-            ¥ <text class="price">{{ goodData?.price }} </text>
+          <view class="good-info-sale-container">
+            <view class="sales">销量：{{ goodData?.sales }}</view>
+            <view class="price-container">
+              ¥ <text class="price">{{ goodData?.price }} </text>
+            </view>
           </view>
         </view>
       </uni-card>
@@ -27,7 +29,7 @@
     <view class="good-table">
       <uni-card :is-shadow="true" is-full>
         <view class="good-table-container">
-          <view v-for="(item, index) in goodData?.mapData" :key="index" class="good-table-item-container">
+          <view v-for="(item, index) in goodData?.detailTable" :key="index" class="good-table-item-container">
             <view class="good-table-label">{{ item.label }}: </view>
             <view class="good-table-value">{{ item.value }}</view>
           </view>
@@ -37,9 +39,7 @@
 
     <!-- 商品详情图，可能多张 -->
     <view class="detail-img-container">
-      <template v-for="(src, index) in goodData?.detailImgs" :key="index">
-        <image class="detail-img" mode="widthFix" :src="src"></image>
-      </template>
+      <image class="detail-img" mode="widthFix" :src="getStaticUrl(goodData?.detailImg)"></image>
     </view>
 
     <!-- 底部按钮区域 -->
@@ -59,43 +59,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import { type IGood } from "@qinfeng/types";
+import { IGoodDetail, type IGood } from "@qinfeng/types";
+import { getGoodApi } from "@/api/modules/good";
+import { getStaticUrl } from "@/api/request";
 
 const isMp4 = (src: string) => {
   return src.endsWith(".mp4");
 };
 
 const goodData = ref<IGood>();
-
-const mockSwiperList: string[] = [
-  "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4",
-  "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg",
-  "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg",
-];
-
-const mockDetailImgs: string[] = [
-  "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg",
-  "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg",
-];
-
-const mockMapDataList = [
-  {
-    label: "规格",
-    value: "500g",
-  },
-  {
-    label: "规格",
-    value: "500g",
-  },
-  {
-    label: "规格",
-    value: "500g",
-  },
-  {
-    label: "规格",
-    value: "500g",
-  },
-];
 
 // 回到首页
 const toHome = () => {
@@ -105,19 +77,12 @@ const toHome = () => {
 };
 
 // 在 onLoad 函数中获取路由参数
-onLoad((option: any) => {
+onLoad(async (option: any) => {
   console.log("onLoad", option);
   // 从路由参数中获取商品ID
-  const goodsId = option.id;
-  goodData.value = {
-    id: goodsId,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    salesVolume: 100,
-    swiperList: mockSwiperList,
-    mapData: mockMapDataList,
-    detailImgs: mockDetailImgs,
-  };
+  const goodId = option.id;
+  const res = await getGoodApi<IGoodDetail>(goodId);
+  goodData.value = res;
 });
 </script>
 <style scoped lang="scss">
@@ -127,11 +92,16 @@ onLoad((option: any) => {
   background-color: #f5f5f5;
   padding-bottom: 14vw;
 
+  .w-full {
+    width: 100%;
+  }
+
   .swiper-content {
     width: 100vw;
     height: 300rpx;
   }
   .good-info {
+    widows: 100vw;
     display: flex;
     justify-content: center;
     padding: 4vw;
@@ -169,22 +139,22 @@ onLoad((option: any) => {
     .good-table-container {
       display: flex;
       flex-wrap: wrap;
-      border: 1rpx solid #eee;
       border-radius: 8rpx;
       overflow: hidden;
+
       .good-table-item-container {
         display: flex;
         align-items: center;
         width: 50%;
         padding: 16rpx;
         box-sizing: border-box;
-        border-bottom: 1rpx solid #eee;
+        border: 1rpx solid #eee;
         color: #888;
-        &:nth-child(odd) {
-          border-right: 1rpx solid #eee;
+        &:nth-child(even) {
+          border-left: none;
         }
-        &:nth-last-child(-n + 2) {
-          border-bottom: none;
+        &:nth-child(n + 3) {
+          border-top: none;
         }
         .good-table-label {
           flex: 1;

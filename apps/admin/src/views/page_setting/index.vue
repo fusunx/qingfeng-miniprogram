@@ -90,6 +90,7 @@ init();
           :key="index"
           :label="item.label"
           :prop="item.key"
+          required
         >
           <el-upload
             class="avatar-uploader"

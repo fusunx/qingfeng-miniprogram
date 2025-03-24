@@ -15,20 +15,19 @@ export class GoodService extends MysqlBaseService<Good> {
     super(repository);
   }
 
-  async initCategory() {
-    const category = await this.categoryService.find({
-      where: { id: 1 },
+  async initCategory(id: number) {
+    const category = await this.categoryService.findOne({
+      where: { id },
     });
     if (!category) {
       throw new Error("分类不存在");
     }
-
     return category;
   }
 
   /** 创建商品 */
   async createGood(createGoodDto: CreateGoodDto) {
-    const category = await this.initCategory();
+    const category = await this.initCategory(createGoodDto.category);
     // 保存商品
     return await this.repository.save({ ...createGoodDto, category });
   }
@@ -70,11 +69,14 @@ export class GoodService extends MysqlBaseService<Good> {
 
   /** 获取商品详情 */
   async getGoodDetail(id: number) {
-    return await this.repository.findOneBy({ id });
+    return await this.repository.findOne({
+      where: { id },
+      relations: ["category"],
+    });
   }
   /** 更新商品 */
   async updateGood(id: number, updateGoodDto: UpdateGoodDto) {
-    const category = await this.initCategory();
+    const category = await this.initCategory(updateGoodDto.category);
     return await this.repository.update(id, { ...updateGoodDto, category });
   }
 }

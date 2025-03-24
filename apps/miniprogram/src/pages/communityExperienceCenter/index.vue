@@ -1,94 +1,73 @@
 <template>
   <view class="content">
     <!-- 顶部图片 -->
-    <image class="top-img" src="/static/logo.png" mode="widthFix" />
+    <image class="top-img" :src="getStaticUrl(pageConfig?.experienceTopImg)" mode="widthFix" />
 
     <!-- 商品列表 -->
     <view class="goods-list">
-      <template v-for="good in mockGoodsList" :key="good.id">
+      <template v-for="good in goodList" :key="good.id">
         <Card class="card" :good="good" />
       </template>
     </view>
 
     <!-- 加载更多按钮 -->
     <view @click="handleLoadMore" class="loadMoreContainer">
-      <text class="text">加载更多</text>
-      <uni-icons type="loop" size="20" color="#e3d90b" :class="{ rotate: isLoading }"></uni-icons>
+      <text class="text">{{ loadText }}</text>
+      <uni-icons v-if="showFlashIcon" type="loop" size="20" color="#e3d90b" :class="{ rotate: isLoading }"></uni-icons>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Card from "@/components/Card.vue";
-import { type IGood } from "@qinfeng/types";
+import { ICommonListResult, IPageConfig, type IGood } from "@qinfeng/types";
+import { getPageConfigApi } from "@/api/modules/page";
+import { getGoodListApi } from "@/api/modules/good";
+import { getStaticUrl } from "@/api/request";
 
-const mockGoodsList: IGood[] = [
-  {
-    id: 1,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 2,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 3,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 4,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 5,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 6,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 7,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 8,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-];
+let page = 1;
+let total = 0;
 
-const videoErrorCallback = (e: any) => {
-  console.log("视频错误信息:", e.detail.errMsg);
-};
+const pageConfig = ref<IPageConfig>();
+const goodList = ref<IGood[]>([]);
+
+const showFlashIcon = computed(() => {
+  return goodList.value.length < total;
+});
+
+const loadText = computed(() => {
+  return !showFlashIcon.value ? "没有更多了" : "加载更多";
+});
 
 // 加载中
 const isLoading = ref(false);
 // 加载更多
-const handleLoadMore = () => {
+const handleLoadMore = async () => {
+  if (goodList.value.length >= total) {
+    return;
+  }
   isLoading.value = true;
-  console.log("加载更多");
-  // 模拟异步操作
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
+  await getGoodList();
+  isLoading.value = false;
 };
+
+const getGoodList = async () => {
+  const res = await getGoodListApi<ICommonListResult<IGood>>({
+    page,
+    pageSize: 20,
+  });
+  page++;
+  goodList.value.push(...res.data);
+};
+
+const init = async () => {
+  const res = await getPageConfigApi<IPageConfig>();
+  pageConfig.value = res;
+  await getGoodList();
+};
+
+init();
 </script>
 
 <style lang="scss" scoped>

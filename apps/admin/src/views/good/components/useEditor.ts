@@ -65,6 +65,7 @@ export const useEditor = () => {
     id: number,
     reqData: ICreateGood,
   ) => {
+    console.log("updateGood", id, reqData);
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {

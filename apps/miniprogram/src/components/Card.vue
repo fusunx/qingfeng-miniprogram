@@ -1,13 +1,13 @@
 <template>
   <view class="card" @click="toDetail">
-    <image class="card-img" src="/static/logo.png" mode="widthFix" />
+    <image class="card-img" :src="getStaticUrl(good?.listImg)" mode="widthFix" />
     <view class="card-title ellipsis-2">
-      {{ title }}
+      {{ good?.name }}
     </view>
     <!-- 卡片底部元素 -->
     <view class="card-bottom">
       <view class="card-price">
-        {{ price }}
+        {{ good?.price }}
       </view>
       <uni-icons type="cart-filled" size="24" color="#e3d90b" @click="handleBuy"></uni-icons>
     </view>
@@ -17,9 +17,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { type IGood } from "@qinfeng/types";
-const title = ref("测试商品测试商品测试商品测试商品测试商品测试商品");
-const price = ref("200.00");
-const good = ref<IGood>();
+import { getStaticUrl } from "@/api/request";
+
 const props = defineProps<{ good: IGood }>();
 
 const handleBuy = () => {};
@@ -27,7 +26,7 @@ const handleBuy = () => {};
 const toDetail = () => {
   console.log("toDetail");
   uni.navigateTo({
-    url: "/pages/goodDetail/index?id=1",
+    url: `/pages/goodDetail/index?id=${props.good.id}`,
   });
 };
 </script>

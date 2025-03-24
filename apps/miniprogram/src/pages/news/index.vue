@@ -1,18 +1,18 @@
 <template>
   <view class="content">
     <!-- 顶部图片 -->
-    <image class="top-img" src="/static/logo.png" mode="widthFix" />
+    <image class="top-img" :src="getStaticUrl(pageConfig?.policyTopImg)" mode="widthFix" />
 
     <!-- 文章列表 -->
-    <view class="article-container">
-      <uni-card :is-shadow="true" is-full>
+    <view class="article-container" v-for="item in articleList" :key="item.id">
+      <uni-card :is-shadow="true" is-full @click="() => handleToRichText(item.id)">
         <view class="article-item">
           <view class="article-item-title">
-            <text>文章标题</text>
+            <text>{{ item.name }}</text>
           </view>
           <view class="article-item-content">
             <text>钦丰康养</text>
-            <text>2024-11-06 08:32:48</text>
+            <text>{{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm:ss") }}</text>
           </view>
         </view>
       </uni-card>
@@ -20,26 +20,69 @@
 
     <!-- 加载更多按钮 -->
     <view @click="handleLoadMore" class="loadMoreContainer">
-      <text class="text">加载更多</text>
-      <uni-icons type="loop" size="20" color="#e3d90b" :class="{ rotate: isLoading }"></uni-icons>
+      <text class="text">{{ loadText }}</text>
+      <uni-icons v-if="showFlashIcon" type="loop" size="20" color="#e3d90b" :class="{ rotate: isLoading }"></uni-icons>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { getPageConfigApi } from "@/api/modules/page";
+import { IArticleDetail, ICommonListResult, IPageConfig } from "@qinfeng/types";
+import { ref, computed } from "vue";
+import { getStaticUrl } from "@/api/request";
+import { getArticleListApi } from "@/api/modules/article";
+import dayjs from "dayjs";
+
+let page = 1;
+let total = 0;
+
+const pageConfig = ref<IPageConfig>();
+const articleList = ref<IArticleDetail[]>([]);
+
+const showFlashIcon = computed(() => {
+  return articleList.value.length < total;
+});
+
+const loadText = computed(() => {
+  return !showFlashIcon.value ? "没有更多了" : "加载更多";
+});
 
 // 加载中
 const isLoading = ref(false);
 // 加载更多
-const handleLoadMore = () => {
+const handleLoadMore = async () => {
+  if (articleList.value.length >= total) {
+    return;
+  }
   isLoading.value = true;
-  console.log("加载更多");
-  // 模拟异步操作
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
+  await getArticleList();
+  isLoading.value = false;
 };
+
+const getArticleList = async () => {
+  const res = await getArticleListApi<ICommonListResult<IArticleDetail>>({
+    page,
+    pageSize: 20,
+  });
+  page++;
+  articleList.value.push(...res.data);
+  total = res.total;
+};
+
+const handleToRichText = (id: number) => {
+  uni.navigateTo({
+    url: `/pages/richText/index?id=${id}`,
+  });
+};
+
+const init = async () => {
+  const res = await getPageConfigApi<IPageConfig>();
+  pageConfig.value = res;
+  await getArticleList();
+};
+
+init();
 </script>
 
 <style lang="scss" scoped>

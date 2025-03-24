@@ -1,3 +1,5 @@
+import { IGoodDetail } from "./common";
+
 export interface IGoodMapData {
   label: string;
   value: string;
@@ -5,16 +7,7 @@ export interface IGoodMapData {
 
 export type IGoodMapDataList = IGoodMapData[];
 
-export interface IGood {
-  id: number;
-  name: string;
-  price: number;
-  salesVolume?: number;
-  img?: string;
-  swiperList?: string[];
-  mapData?: IGoodMapData[];
-  detailImgs?: string[];
-}
+export interface IGood extends IGoodDetail {}
 
 export interface ICategory {
   id: number;
