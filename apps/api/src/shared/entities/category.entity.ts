@@ -1,13 +1,13 @@
 // category.entity.ts
 import { Entity, Column, OneToMany } from "typeorm";
 import { BasicEntity } from "./basic.entity";
-import { Product } from "./good.entity";
+import { Good } from "./good.entity";
 
-@Entity()
+@Entity("category")
 export class Category extends BasicEntity {
-  @Column()
+  @Column({ nullable: true })
   img: string;
 
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  @OneToMany(() => Good, (good) => good.category)
+  products: Good[];
 }

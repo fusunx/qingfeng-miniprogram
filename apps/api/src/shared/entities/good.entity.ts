@@ -5,8 +5,8 @@ import { IsNotEmpty } from "class-validator";
 import { BasicEntity } from "./basic.entity";
 import { IGoodMapDataList } from "@qinfeng/types";
 
-@Entity()
-export class Product extends BasicEntity {
+@Entity("good")
+export class Good extends BasicEntity {
   /** 列表图片 */
   @Column()
   listImg: string;

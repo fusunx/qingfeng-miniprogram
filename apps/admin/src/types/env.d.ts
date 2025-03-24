@@ -32,4 +32,8 @@ interface ImportMetaEnv {
    * 禁用mock
    */
   readonly VITE_BUILD_MOCK: boolean
+  /**
+   * 上传文件接口地址
+   */
+  readonly VITE_UPLOAD_URL: string
 }

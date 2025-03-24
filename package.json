@@ -18,6 +18,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@qinfeng/types": "workspace:^"
+    "@qinfeng/types": "workspace:^",
+    "dayjs": "^1.11.13"
   }
 }

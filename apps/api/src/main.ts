@@ -15,6 +15,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // 删除 DTO 中未定义的字段
+      transform: true, // 自动转换 DTO 中的字段类型
       // forbidNonWhitelisted: true, // 如果有多余字段，直接抛出错误
     }),
   );

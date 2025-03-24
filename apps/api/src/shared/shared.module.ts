@@ -11,6 +11,15 @@ import { APP_GUARD } from "@nestjs/core";
 import { JwtAuthGuard } from "./guards/auth-guard.guard";
 import { PassportModule } from "@nestjs/passport";
 import { AuthLocalStrategy } from "./strategies/auth-local.strategy";
+import { JwtStrategy } from "./strategies/jwt.strategy";
+import { PageService } from "./services/page.service";
+import { Page } from "./entities/page.entity";
+import { Article } from "./entities/article.entity";
+import { Category } from "./entities/category.entity";
+import { Good } from "./entities/good.entity";
+import { CategoryService } from "./services/category.service";
+import { GoodService } from "./services/good.service";
+import { ArticleService } from "./services/article.service";
 
 @Global()
 @Module({
@@ -37,7 +46,7 @@ import { AuthLocalStrategy } from "./strategies/auth-local.strategy";
         };
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Page, Article, Category, Good]),
     PassportModule,
     JwtModule.register({
       global: true,
@@ -55,6 +64,11 @@ import { AuthLocalStrategy } from "./strategies/auth-local.strategy";
     UtilityService,
     AuthService,
     User,
+    JwtStrategy,
+    PageService,
+    CategoryService,
+    GoodService,
+    ArticleService,
   ],
   exports: [
     AuthLocalStrategy,
@@ -63,6 +77,11 @@ import { AuthLocalStrategy } from "./strategies/auth-local.strategy";
     UtilityService,
     AuthService,
     User,
+    JwtStrategy,
+    PageService,
+    CategoryService,
+    GoodService,
+    ArticleService,
   ],
 })
 export class SharedModule {}

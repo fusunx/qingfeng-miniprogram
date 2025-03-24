@@ -46,6 +46,7 @@ export class AuthService {
         expiresIn: "7d",
         secret: this.configurationService.jwtSecret,
       }),
+      username: user.username,
     };
   }
 

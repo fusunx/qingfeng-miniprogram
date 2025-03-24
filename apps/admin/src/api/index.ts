@@ -3,6 +3,20 @@ import axios from "axios";
 // import qs from 'qs'
 import { toast } from "vue-sonner";
 
+// 格式化token
+export function formatToken(token: null | string) {
+  return token ? `Bearer ${token}` : null;
+}
+
+// 生成请求头，带token
+export function getTokenConfig() {
+  const userStore = useUserStore();
+  return {
+    Authorization: formatToken(userStore.token),
+    Token: userStore.token,
+  };
+}
+
 const api = axios.create({
   baseURL:
     import.meta.env.DEV && import.meta.env.VITE_OPEN_PROXY
@@ -13,11 +27,11 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((request) => {
-  // 全局拦截请求发送前提交的参数
   const userStore = useUserStore();
   // 设置请求头
   if (request.headers) {
     if (userStore.isLogin) {
+      request.headers.Authorization = formatToken(userStore.token);
       request.headers.Token = userStore.token;
     }
   }
@@ -40,7 +54,9 @@ api.interceptors.response.use(
       useUserStore().requestLogout();
       throw error;
     }
-    let message = error?.response?.data?.message || error.message;
+    let message =
+      JSON.stringify(error?.response?.data?.message) ||
+      JSON.stringify(error.message);
     if (message === "Network Error") {
       message = "后端网络故障";
     } else if (message.includes("timeout")) {

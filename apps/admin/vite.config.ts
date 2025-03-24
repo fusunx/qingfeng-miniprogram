@@ -24,17 +24,14 @@ export default defineConfig(({ mode, command }) => {
       proxy: {
         "/api": {
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
           // mock代理目标地址
-          target: "http://localhost:4000/api",
+          target: "http://localhost:4000/",
           ws: true,
         },
         "/uploads": {
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/uploads/, ""),
           // mock代理目标地址
-          target: "http://localhost:4000/uploads",
-          ws: true,
+          target: "http://localhost:4000/",
         },
       },
     },
