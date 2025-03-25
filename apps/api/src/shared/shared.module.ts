@@ -21,6 +21,7 @@ import { CategoryService } from "./services/category.service";
 import { GoodService } from "./services/good.service";
 import { ArticleService } from "./services/article.service";
 
+console.log(process.env.NODE_ENV, "=======");
 @Global()
 @Module({
   imports: [
