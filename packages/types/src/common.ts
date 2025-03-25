@@ -1,5 +1,5 @@
 import { EntityCommonStatus } from "./entity";
-import { IGoodMapDataList } from "./good";
+import type { IGoodMapDataList } from "./good";
 
 /** 通用筛选分页参数 */
 export interface ICommonFilterPage {

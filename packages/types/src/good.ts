@@ -1,4 +1,4 @@
-import { IGoodDetail } from "./common";
+import type { IGoodDetail } from "./common";
 
 export interface IGoodMapData {
   label: string;

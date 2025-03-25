@@ -21,7 +21,6 @@ import Pages from "vite-plugin-pages";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import VueDevTools from "vite-plugin-vue-devtools";
 import Layouts from "vite-plugin-vue-meta-layouts";
-import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
