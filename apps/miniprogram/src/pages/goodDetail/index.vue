@@ -48,32 +48,46 @@
         <view class="fixed-bottom-area-item bg-to-home" @click="toHome">
           <text>首页</text>
         </view>
-        <view class="fixed-bottom-area-item">
+        <view class="fixed-bottom-area-item" @click="handleBuy">
           <text>立即购买</text>
         </view>
       </view>
     </view>
+
+    <uni-popup ref="popup" background-color="#fff">
+      <view class="popup-content">
+        <image mode="aspectFit" :src="getStaticUrl(pageConfig?.customerServiceWechatQrCode)"></image>
+        <view class="popup-text">请扫码添加客服微信购买</view>
+      </view>
+    </uni-popup>
   </view>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import { IGoodDetail, type IGood } from "@qinfeng/types";
+import { IGoodDetail, IPageConfig, type IGood } from "@qinfeng/types";
 import { getGoodApi } from "@/api/modules/good";
 import { getStaticUrl } from "@/api/request";
+import { getPageConfigApi } from "@/api/modules/page";
 
 const isMp4 = (src: string) => {
   return src.endsWith(".mp4");
 };
 
 const goodData = ref<IGood>();
+const popup = ref();
+const pageConfig = ref<IPageConfig>();
 
 // 回到首页
 const toHome = () => {
   uni.switchTab({
     url: "/pages/index/index",
   });
+};
+
+const handleBuy = () => {
+  popup.value.open();
 };
 
 // 在 onLoad 函数中获取路由参数
@@ -84,6 +98,12 @@ onLoad(async (option: any) => {
   const res = await getGoodApi<IGoodDetail>(goodId);
   goodData.value = res;
 });
+
+const init = async () => {
+  const res = await getPageConfigApi<IPageConfig>();
+  pageConfig.value = res;
+};
+init();
 </script>
 <style scoped lang="scss">
 .page {
@@ -91,6 +111,13 @@ onLoad(async (option: any) => {
   min-height: 100vh;
   background-color: #f5f5f5;
   padding-bottom: 14vw;
+
+  .popup-content {
+    padding-bottom: 20rpx;
+  }
+  .popup-text {
+    text-align: center;
+  }
 
   .w-full {
     width: 100%;

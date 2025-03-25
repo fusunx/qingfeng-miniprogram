@@ -24,7 +24,7 @@ const cardClass = computed(() => {
 
 <style scoped lang="scss">
 .goods-list {
-  width: 100vw;
+  width: 100%;
   display: flex; /* 激活 Flex 布局 */
   justify-content: flex-start;
   padding: 32rpx 3vw;

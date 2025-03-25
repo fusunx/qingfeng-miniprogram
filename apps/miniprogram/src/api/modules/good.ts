@@ -5,8 +5,8 @@ import { RequestEnum } from "../types";
 /**
  * @description 商品分类配置
  */
-export const getCategoryApi = (data: ICommonFilterPage) => {
-  return request({
+export const getCategoryApi = <T>(data: ICommonFilterPage) => {
+  return request<T>({
     url: "category/list",
     method: RequestEnum.GET,
     params: data,

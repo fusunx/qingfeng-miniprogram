@@ -71,5 +71,6 @@ export class GetListCommonDto {
 export class GetGoodListDto extends GetListCommonDto {
   @IsOptional()
   @IsNumber()
+  @Transform(({ value }) => Number(value))
   categoryId?: number;
 }

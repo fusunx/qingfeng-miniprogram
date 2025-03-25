@@ -36,6 +36,10 @@ export abstract class MysqlBaseService<T> {
   async delete(id: number) {
     return await this.repository.delete(id);
   }
+
+  async save(entity: T) {
+    return await this.repository.save(entity);
+  }
 }
 
 // save 可以实现插入和更新 有ID则更新，没ID则插入

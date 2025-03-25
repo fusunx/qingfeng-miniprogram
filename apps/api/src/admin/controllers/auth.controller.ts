@@ -25,6 +25,19 @@ export class AuthController {
     return BasicResult.success("登录成功", result);
   }
 
+  @Post("/edit/password")
+  @HttpCode(200)
+  async editPassword(@Request() req, @Body() body) {
+    const { password, newPassword } = body;
+    const user = req.user;
+    const result = await this.authService.editPassword(
+      user,
+      password,
+      newPassword,
+    );
+    return BasicResult.success("修改密码成功", result);
+  }
+
   @Post("/logout")
   @HttpCode(200)
   async logout(@Request() req) {

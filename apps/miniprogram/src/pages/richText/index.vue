@@ -8,7 +8,7 @@
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import { getArticleApi } from "@/api/modules/article";
-import { IArticleDetail } from "@/qinfeng/types";
+import { IArticleDetail } from "@qinfeng/types";
 
 const title = ref("");
 const strings = ref("");

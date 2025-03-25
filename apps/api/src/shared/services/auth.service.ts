@@ -50,6 +50,25 @@ export class AuthService {
     };
   }
 
+  async editPassword(user: LoginDto, password: string, newPassword: string) {
+    const userInfo = await this.userService.findOne({
+      where: { username: user.username },
+    });
+    if (userInfo) {
+      if (
+        await this.utilityService.comparePassword(password, userInfo.password)
+      ) {
+        userInfo.password = await this.utilityService.hashPassword(newPassword);
+        await this.userService.save(userInfo);
+        return true;
+      } else {
+        throw new BadRequestException("密码错误");
+      }
+    } else {
+      throw new BadRequestException("用户不存在");
+    }
+  }
+
   async refreshToken(token: string) {
     try {
       const user = await this.jwtService.verifyAsync(token, {

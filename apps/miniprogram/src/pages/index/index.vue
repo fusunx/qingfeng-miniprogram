@@ -14,7 +14,9 @@
     <image class="top-img" :src="getStaticUrl(pageConfig?.homeSecondImg)" mode="widthFix" />
 
     <!-- 商品列表 -->
-    <GoodList :goodList="goodList" :columns="3"></GoodList>
+    <div class="video">
+      <GoodList :goodList="goodList" :columns="3"></GoodList>
+    </div>
 
     <!-- 加载更多按钮 -->
     <view @click="handleLoadMore" class="loadMoreContainer">

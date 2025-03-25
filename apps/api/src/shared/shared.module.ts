@@ -24,7 +24,10 @@ import { ArticleService } from "./services/article.service";
 @Global()
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [`.env.${process.env.NODE_ENV}`, ".env"],
+    }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigurationService],
       useFactory: (configurationService: ConfigurationService) => {

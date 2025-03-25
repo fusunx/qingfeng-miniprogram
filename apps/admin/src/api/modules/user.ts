@@ -15,8 +15,9 @@ export default {
     }),
 
   // 修改密码
-  passwordEdit: (data: { password: string; newPassword: string }) =>
-    api.post("user/password/edit", data, {
-      baseURL: "/mock/",
-    }),
+  passwordEdit: (data: { password: string; newPassword: string }) => {
+    data.password = md5(data.password);
+    data.newPassword = md5(data.newPassword);
+    return api.post("/edit/password", data);
+  },
 };

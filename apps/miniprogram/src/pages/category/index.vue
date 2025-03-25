@@ -2,7 +2,11 @@
   <view class="content">
     <view class="page-left">
       <template v-for="(item, index) in categoryList" :key="index">
-        <view class="page-left-title" :class="{ active: activeCategoryId === item.id }">
+        <view
+          class="page-left-title"
+          :class="{ active: activeCategoryId === item.id }"
+          @click="() => handleCategoryChange(item.id)"
+        >
           {{ item.name }}
         </view>
       </template>
@@ -20,80 +24,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { type ICategory, type IGood } from "@qinfeng/types";
+import { ICategoryDetail, ICommonListResult, type ICategory, type IGood } from "@qinfeng/types";
 import GoodList from "@/components/GoodList.vue";
-const mockCategoryList = [
-  {
-    id: 1,
-    name: "Category 1",
-  },
-  {
-    id: 2,
-    name: "Category 2",
-  },
-  {
-    id: 3,
-    name: "Category 3",
-  },
-  {
-    id: 4,
-    name: "Category 4",
-  },
-];
+import { getGoodListApi, getCategoryApi } from "@/api/modules/good";
 
-const mockGoodsList: IGood[] = [
-  {
-    id: 1,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 2,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 3,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 4,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 5,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 6,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 7,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-  {
-    id: 8,
-    name: "测试商品测试商品测试商品测试商品测试商品测试商品",
-    price: 200.0,
-    img: "https://m.lailaieshop.com/uploads/3499f52e-12e0-4115-841b-318dda1daa98.webp",
-  },
-];
-
-const categoryList = ref<ICategory[]>(mockCategoryList);
-const activeCategoryId = ref<number>(1);
+const categoryList = ref<ICategory[]>([]);
+const activeCategoryId = ref<number>();
 
 const loadingStatus = ref<"loading" | "noMore" | "more">("more");
 
@@ -101,16 +37,24 @@ const goodList = ref<IGood[]>([]);
 
 let page = 1;
 
-const loadGoodList = () => {
-  loadingStatus.value = "loading";
-  setTimeout(() => {
-    goodList.value?.push(...mockGoodsList);
-    if (goodList.value.length > 30) {
+const loadGoodList = async () => {
+  try {
+    loadingStatus.value = "loading";
+    const res = await getGoodListApi<ICommonListResult<IGood>>({
+      page,
+      pageSize: 20,
+      categoryId: activeCategoryId.value,
+    });
+    goodList.value?.push(...res.data);
+    if (goodList.value.length >= res.total) {
       loadingStatus.value = "noMore";
     } else {
       loadingStatus.value = "more";
     }
-  }, 1000);
+    page++;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const handleScrollToLower = () => {
@@ -121,7 +65,21 @@ const handleScrollToLower = () => {
   loadGoodList();
 };
 
-loadGoodList();
+const handleCategoryChange = async (id: number) => {
+  activeCategoryId.value = id;
+  page = 1;
+  goodList.value = [];
+  await loadGoodList();
+};
+
+const init = async () => {
+  const res = await getCategoryApi<ICommonListResult<ICategoryDetail>>({ page: 1, pageSize: 100 });
+  categoryList.value = res.data;
+  activeCategoryId.value = res.data[0].id;
+  await loadGoodList();
+};
+
+init();
 </script>
 
 <style scoped lang="scss">
@@ -133,6 +91,7 @@ loadGoodList();
     width: 25vw;
     height: 100%;
     .page-left-title {
+      width: 15vw;
       padding: 20rpx;
       font-size: 26rpx;
       color: #333;
