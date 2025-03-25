@@ -23,7 +23,7 @@ async function bootstrap() {
   // 设置全局路由前缀
   // app.setGlobalPrefix("api");
 
-  await app.listen(process.env.PORT ?? 4000);
+  await app.listen(process.env.PORT ?? 4000, "127.0.0.1");
 
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
