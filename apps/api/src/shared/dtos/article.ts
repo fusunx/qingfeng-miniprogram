@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { GetListCommonDto } from "./category.dto";
+import { EntityCommonStatus } from "@qinfeng/types";
 
 /** 创建文章dto */
 export class CreateArticleDto {
@@ -12,6 +13,9 @@ export class CreateArticleDto {
   @IsNotEmpty()
   @IsString()
   name: string;
+  @IsOptional()
+  @IsNumber()
+  status: EntityCommonStatus;
 }
 
 /** 更新文章dto */

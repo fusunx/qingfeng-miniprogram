@@ -7,6 +7,7 @@ export interface ICommonFilterPage {
   pageSize: number;
   id?: number;
   name?: string;
+  status?: EntityCommonStatus; // 1: 启用, 0: 禁用
 }
 
 /** 弹窗操作类型 */
@@ -38,8 +39,8 @@ export interface IStatusOption {
  * 状态下拉选择数据
  */
 export const statusOptions: IStatusOption[] = [
-  { label: "启用", value: 1 },
-  { label: "禁用", value: 2 },
+  { label: "启用", value: EntityCommonStatus.enable },
+  { label: "禁用", value: EntityCommonStatus.notEnabled },
 ];
 
 /** 通用列表返回数据 */

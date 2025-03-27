@@ -1,4 +1,4 @@
-import { ICommonFilterPage, IGoodFilterData } from "@qinfeng/types";
+import { EntityCommonStatus, ICommonFilterPage, IGoodFilterData } from "@qinfeng/types";
 import { request } from "../request";
 import { RequestEnum } from "../types";
 
@@ -6,6 +6,7 @@ import { RequestEnum } from "../types";
  * @description 商品分类配置
  */
 export const getCategoryApi = <T>(data: ICommonFilterPage) => {
+  data.status = EntityCommonStatus.enable;
   return request<T>({
     url: "category/list",
     method: RequestEnum.GET,
@@ -17,6 +18,7 @@ export const getCategoryApi = <T>(data: ICommonFilterPage) => {
  * @description 获取商品列表
  */
 export const getGoodListApi = <T>(data: IGoodFilterData) => {
+  data.status = EntityCommonStatus.enable;
   return request<T>({
     url: "good/list",
     method: RequestEnum.GET,

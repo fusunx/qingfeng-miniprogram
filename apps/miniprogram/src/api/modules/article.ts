@@ -1,4 +1,4 @@
-import { ICommonFilterPage } from "@qinfeng/types";
+import { EntityCommonStatus, ICommonFilterPage } from "@qinfeng/types";
 import { request } from "../request";
 import { RequestEnum } from "../types";
 
@@ -6,6 +6,7 @@ import { RequestEnum } from "../types";
  * @description 获取文章列表
  */
 export const getArticleListApi = <T>(data: ICommonFilterPage) => {
+  data.status = EntityCommonStatus.enable;
   return request<T>({
     url: "article/list",
     method: RequestEnum.GET,

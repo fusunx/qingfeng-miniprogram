@@ -1,3 +1,4 @@
+import { EntityCommonStatus } from "@qinfeng/types";
 import { Transform, Type } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
@@ -12,6 +13,9 @@ export class CreateCategoryDto {
   @IsOptional()
   @IsString()
   img?: string;
+  @IsOptional()
+  @IsNumber()
+  status: EntityCommonStatus;
 }
 
 /** 更新分类dto */
@@ -39,7 +43,8 @@ export class GetListCommonDto {
   name?: string;
   @IsOptional()
   @IsNumber()
-  status?: number;
+  @Transform(({ value }) => Number(value)) // 类型转换
+  status?: EntityCommonStatus;
 }
 
 /** 获取分类列表dto */
