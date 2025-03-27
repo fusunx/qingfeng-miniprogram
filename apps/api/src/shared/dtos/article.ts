@@ -1,5 +1,5 @@
-import { Transform } from "class-transformer";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { GetListCommonDto } from "./category.dto";
 
 /** 创建文章dto */
 export class CreateArticleDto {
@@ -19,22 +19,6 @@ export class UpdateArticleDto extends CreateArticleDto {
   @IsNotEmpty()
   @IsNumber()
   id: number;
-}
-
-/** 获取列表通用dto */
-export class GetListCommonDto {
-  @Transform(({ value }) => Number(value)) // 类型转换
-  @IsNumber()
-  page: number;
-  @Transform(({ value }) => Number(value)) // 类型转换
-  @IsNumber()
-  pageSize: number;
-  @IsOptional()
-  @IsNumber()
-  id?: number;
-  @IsOptional()
-  @IsString()
-  name?: string;
 }
 
 /** 获取文章列表dto */

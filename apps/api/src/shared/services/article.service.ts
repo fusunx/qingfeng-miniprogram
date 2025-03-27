@@ -24,22 +24,28 @@ export class ArticleService extends MysqlBaseService<Article> {
 
   /** 获取文章列表 */
   async getArticleList(getArticleListDto: GetArticleListDto) {
-    const { page, pageSize, id, name } = getArticleListDto;
+    const { page, pageSize, id, name, status } = getArticleListDto;
     const queryBuilder = this.repository
-      .createQueryBuilder("category")
-      .addOrderBy("category.createdAt", "DESC") // 按创建时间降序排序
+      .createQueryBuilder("article")
+      .addOrderBy("article.createdAt", "DESC") // 按创建时间降序排序
       .skip((page - 1) * pageSize)
       .take(pageSize);
 
     if (name) {
-      queryBuilder.andWhere("category.name like :name", {
+      queryBuilder.andWhere("article.name like :name", {
         name: `%${name}%`,
       });
     }
 
     if (id) {
-      queryBuilder.andWhere("category.id = :id", {
+      queryBuilder.andWhere("article.id = :id", {
         id: id,
+      });
+    }
+
+    if (status !== undefined) {
+      queryBuilder.andWhere("article.status = :status", {
+        status: status,
       });
     }
 

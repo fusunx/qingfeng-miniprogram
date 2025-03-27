@@ -1,6 +1,7 @@
 import { EntityCommonStatus, IGoodMapDataList } from "@qinfeng/types";
 import { Transform } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { GetListCommonDto } from "./category.dto";
 
 /** 创建分类dto */
 export class CreateGoodDto {
@@ -52,20 +53,6 @@ export class UpdateGoodDto extends CreateGoodDto {
 }
 
 /** 获取列表通用dto */
-export class GetListCommonDto {
-  @Transform(({ value }) => Number(value)) // 类型转换
-  @IsNumber()
-  page: number;
-  @Transform(({ value }) => Number(value)) // 类型转换
-  @IsNumber()
-  pageSize: number;
-  @IsOptional()
-  @IsNumber()
-  id?: number;
-  @IsOptional()
-  @IsString()
-  name?: string;
-}
 
 /** 获取分类列表dto */
 export class GetGoodListDto extends GetListCommonDto {

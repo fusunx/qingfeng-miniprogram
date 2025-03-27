@@ -37,6 +37,9 @@ export class GetListCommonDto {
   @IsOptional()
   @IsString()
   name?: string;
+  @IsOptional()
+  @IsNumber()
+  status?: number;
 }
 
 /** 获取分类列表dto */

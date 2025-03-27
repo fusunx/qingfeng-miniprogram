@@ -24,7 +24,7 @@ export class CategoryService extends MysqlBaseService<Category> {
 
   /** 获取分类列表 */
   async getCategoryList(getCategoryListDto: GetCategoryListDto) {
-    const { page, pageSize, id, name } = getCategoryListDto;
+    const { page, pageSize, id, name, status } = getCategoryListDto;
     const queryBuilder = this.repository
       .createQueryBuilder("category")
       .addOrderBy("category.createdAt", "DESC") // 按创建时间降序排序
@@ -40,6 +40,12 @@ export class CategoryService extends MysqlBaseService<Category> {
     if (id) {
       queryBuilder.andWhere("category.id = :id", {
         id: id,
+      });
+    }
+
+    if (status !== undefined) {
+      queryBuilder.andWhere("category.status = :status", {
+        status: status,
       });
     }
 

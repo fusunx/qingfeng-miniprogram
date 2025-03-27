@@ -34,7 +34,7 @@ export class GoodService extends MysqlBaseService<Good> {
 
   /** 获取商品列表 */
   async getGoodList(getGoodListDto: GetGoodListDto) {
-    const { page, pageSize, id, name, categoryId } = getGoodListDto;
+    const { page, pageSize, id, name, categoryId, status } = getGoodListDto;
     const queryBuilder = this.repository
       .createQueryBuilder("good")
       .leftJoinAndSelect("good.category", "category")
@@ -57,6 +57,12 @@ export class GoodService extends MysqlBaseService<Good> {
     if (categoryId) {
       queryBuilder.andWhere("category.id = :categoryId", {
         categoryId: categoryId,
+      });
+    }
+
+    if (status !== undefined) {
+      queryBuilder.andWhere("good.status = :status", {
+        status: status,
       });
     }
 
