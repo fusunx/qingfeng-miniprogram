@@ -6,6 +6,9 @@ const http = new Request();
 const HTTP_URL = import.meta.env.VITE_APP_API_BASEURL;
 const STATIC_URL = import.meta.env.VITE_APP_STATIC_BASEURL;
 
+console.log("HTTP_URL", HTTP_URL);
+console.log("STATIC_URL", STATIC_URL);
+
 export const getStaticUrl = (url?: string) => {
   if (!url) {
     return "";
@@ -126,7 +129,7 @@ export const request = async <T>(config: configType, options?: optionsType): Pro
       if (opt?.isShowLoading) {
         uni.hideLoading();
       }
-      console.log("request catch", result);
+
       return Promise.reject({
         code: -1,
         msg: msg || "太火爆了，请稍后再试",

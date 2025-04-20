@@ -1,7 +1,11 @@
 <template>
   <view class="content">
     <!-- 顶部图片 -->
-    <image class="top-img" :src="getStaticUrl(pageConfig?.homeFirstImg)" mode="widthFix" />
+    <swiper v-if="pageConfig?.homeFirstImg.length" class="swiper-content" circular :interval="2000" :duration="500">
+      <swiper-item v-for="(src, index) in pageConfig?.homeFirstImg" :key="index">
+        <image class="top-img" mode="widthFix" :src="getStaticUrl(src)"></image>
+      </swiper-item>
+    </swiper>
     <!-- 视频 -->
     <video
       id="myVideo"
@@ -90,6 +94,10 @@ init();
   align-items: center;
   justify-content: center;
   padding-bottom: 32rpx;
+  .swiper-content {
+    width: 100vw;
+    height: 450rpx;
+  }
   .top-img {
     width: 100vw;
   }

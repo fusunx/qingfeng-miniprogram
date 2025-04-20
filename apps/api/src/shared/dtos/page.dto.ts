@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsString } from "class-validator";
 
 export class SetPageConfigDto {
   @IsNotEmpty()
-  @IsString()
-  homeFirstImg: string;
+  @IsArray()
+  homeFirstImg: string[];
   @IsNotEmpty()
   @IsString()
   homeSecondImg: string;

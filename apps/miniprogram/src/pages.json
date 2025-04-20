@@ -41,6 +41,12 @@
       "style": {
         "navigationBarTitleText": "钦丰康养生活馆"
       }
+    },
+    {
+      "path": "pages/staticImage/index",
+      "style": {
+        "navigationBarTitleText": "钦丰康养生活馆"
+      }
     }
   ],
   "globalStyle": {

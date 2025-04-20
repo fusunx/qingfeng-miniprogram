@@ -1,7 +1,7 @@
 <template>
   <view class="content">
     <!-- 顶部图片 -->
-    <image class="top-img" :src="getStaticUrl(pageConfig?.policyTopImg)" mode="widthFix" />
+    <image class="top-img" :src="getStaticUrl(pageConfig?.policyTopImg)" mode="widthFix" @click="toCheck" />
 
     <!-- 文章列表 -->
     <view class="article-container" v-for="item in articleList" :key="item.id">
@@ -76,7 +76,15 @@ const handleToRichText = (id: number) => {
   });
 };
 
+const toCheck = () => {
+  console.log("toCheck");
+  uni.navigateTo({
+    url: "/pages/staticImage/index",
+  });
+};
+
 const init = async () => {
+  console.log("init");
   const res = await getPageConfigApi<IPageConfig>();
   pageConfig.value = res;
   await getArticleList();

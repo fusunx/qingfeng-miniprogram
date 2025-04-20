@@ -10,10 +10,10 @@ import { setPageConfig, getPageConfig } from "@/api/modules/page";
 import { usePageSetting } from "./hooks";
 import { toast } from "vue-sonner";
 
-const { defaultForm, formUploadItemOptions } = usePageSetting();
+const { defaultForm, formUploadItemOptions, homeFirstImg } = usePageSetting();
 
 const ruleFormRef = ref<FormInstance>();
-const form = ref<IPageConfig>(defaultForm);
+const form = ref<Omit<IPageConfig, "homeFirstImg">>(defaultForm);
 
 // 上传请求头
 const uploadHeaders = getTokenConfig();
@@ -39,9 +39,10 @@ const rules = ref<FormRules<IPageConfig>>({
 const handleUploadSuccess = (
   res: ICommonResponse<IUploadFileResponse>,
   _: any,
-  key: keyof IPageConfig,
+  key: keyof Omit<IPageConfig, "homeFirstImg">,
 ) => {
   console.log(res);
+
   // 上传成功后，将图片地址赋值给form.homeFirstImg、form.homeSecondImg、form.homeVide
   form.value![key] = res.data.url;
 };
@@ -50,7 +51,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      setPageConfig(form.value!).then(() => {
+      const swiperImgs = homeFirstImg.value.map(
+        (item) => (item?.response as any)?.data?.url,
+      );
+
+      console.log(swiperImgs);
+      setPageConfig({ ...form.value!, homeFirstImg: swiperImgs }).then(() => {
         toast.success("修改成功");
       });
     } else {
@@ -85,6 +91,18 @@ init();
         size="default"
         status-icon
       >
+        <el-form-item label="首页第一张图片" prop="homeFirstImg" required>
+          <el-upload
+            v-model:file-list="homeFirstImg"
+            multiple
+            :action="uploadUrl"
+            :headers="uploadHeaders"
+            :limit="7"
+          >
+            <el-button type="primary">上传</el-button>
+          </el-upload>
+        </el-form-item>
+
         <el-form-item
           v-for="(item, index) in formUploadItemOptions"
           :key="index"
@@ -107,8 +125,10 @@ init();
               class="w-20 h-20 mr-4"
             />
             <img
-              v-if="item.key !== 'homeVideo' && form[item.key]"
-              :src="form[item.key]"
+              v-if="
+                item.key !== 'homeVideo' && form[item.key as keyof typeof form]
+              "
+              :src="form[item.key] as string"
               class="w-20 h-20 mr-4"
             />
             <el-button type="primary"> 上传 </el-button>

@@ -17,7 +17,7 @@ export enum RequestStatusCode {
 /** 页面配置 */
 export interface IPageConfig {
   /** 首页第一屏图片 */
-  homeFirstImg: string;
+  homeFirstImg: string[];
   /** 首页第二屏图片 */
   homeSecondImg: string;
   /** 首页视频 */
