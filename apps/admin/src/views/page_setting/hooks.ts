@@ -1,4 +1,4 @@
-import type { IPageConfig, pageConfigKeys } from "@qinfeng/types";
+import type { IPageConfig } from "@qinfeng/types";
 import type { UploadUserFile } from "element-plus";
 export const usePageSetting = () => {
   const homeFirstImg = ref<UploadUserFile[]>([]);
