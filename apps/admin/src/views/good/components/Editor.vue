@@ -181,6 +181,14 @@ const getGoodInfo = async (id: number) => {
   const { data: res } = await getGoodDetailApi(id);
   if (res) {
     form.value = res;
+    fileList.value = res.swiperImgs
+      ? res.swiperImgs.map((item) => {
+          return {
+            url: item,
+            name: item,
+          };
+        })
+      : [];
     detailTable.value = res.detailTable ? res.detailTable : [];
   }
 };

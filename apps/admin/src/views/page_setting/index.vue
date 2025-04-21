@@ -21,9 +21,6 @@ const uploadHeaders = getTokenConfig();
 const uploadUrl = "/api/admin/upload";
 
 const rules = ref<FormRules<IPageConfig>>({
-  homeFirstImg: [
-    { required: true, message: "请上传首页第一张图片", trigger: "blur" },
-  ],
   homeSecondImg: [
     { required: true, message: "请上传首页第二张图片", trigger: "blur" },
   ],
@@ -73,6 +70,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
 const init = () => {
   getPageConfig().then((res) => {
     form.value = res.data;
+    homeFirstImg.value = res.data.homeFirstImg.map((item) => ({
+      name: item,
+      url: item,
+    }));
   });
 };
 init();
