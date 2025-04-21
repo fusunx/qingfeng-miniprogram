@@ -21,16 +21,16 @@ const uploadHeaders = getTokenConfig();
 const uploadUrl = "/api/admin/upload";
 
 const rules = ref<FormRules<IPageConfig>>({
-  homeSecondImg: [
-    { required: true, message: "请上传首页第二张图片", trigger: "blur" },
-  ],
-  homeVideo: [{ required: true, message: "请上传首页视频", trigger: "blur" }],
-  experienceTopImg: [
-    { required: true, message: "请上传体验顶部图片", trigger: "blur" },
-  ],
-  policyTopImg: [
-    { required: true, message: "请上传政策顶部图片", trigger: "blur" },
-  ],
+  // homeSecondImg: [
+  //   { required: true, message: "请上传首页第二张图片", trigger: "blur" },
+  // ],
+  // homeVideo: [{ required: true, message: "请上传首页视频", trigger: "blur" }],
+  // experienceTopImg: [
+  //   { required: true, message: "请上传体验顶部图片", trigger: "blur" },
+  // ],
+  // policyTopImg: [
+  //   { required: true, message: "请上传政策顶部图片", trigger: "blur" },
+  // ],
 });
 
 const handleUploadSuccess = (
