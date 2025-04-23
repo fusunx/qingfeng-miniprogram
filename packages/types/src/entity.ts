@@ -28,6 +28,8 @@ export interface IPageConfig {
   policyTopImg: string;
   /** 客服微信二维码 */
   customerServiceWechatQrCode: string;
+  /** 政策中心顶部图片跳转地址图片 */
+  policyTopDetailImg: string;
 }
 
 /** 页面配置的key */

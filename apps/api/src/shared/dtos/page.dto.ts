@@ -19,4 +19,7 @@ export class SetPageConfigDto {
   @IsNotEmpty()
   @IsString()
   customerServiceWechatQrCode: string;
+  @IsNotEmpty()
+  @IsString()
+  policyTopDetailImg: string;
 }

@@ -8,6 +8,7 @@ export const usePageSetting = () => {
     experienceTopImg: "",
     policyTopImg: "",
     customerServiceWechatQrCode: "",
+    policyTopDetailImg: "",
   };
 
   const labelMap: Record<keyof Omit<IPageConfig, "homeFirstImg">, string> = {
@@ -16,6 +17,7 @@ export const usePageSetting = () => {
     experienceTopImg: "体验中心顶部图片",
     policyTopImg: "政策法规顶部图片",
     customerServiceWechatQrCode: "客服微信二维码",
+    policyTopDetailImg: "政策法规顶部图片跳转地址图片",
   };
 
   const formUploadItemOptions = Object.keys(defaultForm).map((key) => {

@@ -2,8 +2,8 @@
   <view class="page">
     <swiper v-if="goodData" class="swiper-content" circular :interval="2000" :duration="500">
       <swiper-item v-for="(src, index) in goodData.swiperImgs" :key="index">
-        <video v-if="isMp4(src)" class="swiper-content" :src="getStaticUrl(src)" controls></video>
-        <image v-else class="swiper-content" mode="widthFix" :src="getStaticUrl(src)"></image>
+        <video v-if="src && isMp4(src)" class="swiper-item" :src="getStaticUrl(src)" controls></video>
+        <image v-else-if="src" class="swiper-item" mode="widthFix" :src="getStaticUrl(src)"></image>
       </swiper-item>
     </swiper>
 
@@ -72,7 +72,7 @@ import { getStaticUrl } from "@/api/request";
 import { getPageConfigApi } from "@/api/modules/page";
 
 const isMp4 = (src: string) => {
-  return src.endsWith(".mp4");
+  return src && src.endsWith(".mp4");
 };
 
 const goodData = ref<IGood>();
@@ -125,7 +125,11 @@ init();
 
   .swiper-content {
     width: 100vw;
-    height: 450rpx;
+    height: 100vw;
+    .swiper-item {
+      width: 100vw;
+      height: auto;
+    }
   }
   .good-info {
     widows: 100vw;
